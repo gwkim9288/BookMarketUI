@@ -25,20 +25,37 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.JScrollPane;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class UserInterface {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	CardLayout layout;
+	private JTextField logInID;
+	private JTextField logInPassword;
+	private JTextField textField_;
 	private JTextField textField_3;
 	private JTextField txtWithout;
 	private JTextField textField_5;
 	private JTextField textField_4;
 	private JTable table;
-	JPanel panel = new JPanel();
+	JPanel marketStart = new JPanel();
 	private JTable table_1;
+	JPanel userRegister;
+	JButton btnUserRegister;
+	private JTextField textField_6;
+	private JTextField textField_7;
+	private JTextField textField_8;
+	private JTextField textField_9;
+	private JTextField textField_10;
+	private JTextField textField_11;
+	private JTextField textField_12;
+	private final Action action = new SwingAction();
 
 	/**
 	 * Launch the application.
@@ -49,6 +66,7 @@ public class UserInterface {
 				try {
 					UserInterface window = new UserInterface();
 					window.frame.setVisible(true);
+					window.marketExcution();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -66,52 +84,74 @@ public class UserInterface {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void marketIn() {
+	public void marketExcution() {
+		layout.show(frame.getContentPane(), "marketStart");
+		btnUserRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton btn = (JButton) e.getSource();
+				if(btn.getText().equals("Click"))
+					btn.setText("Hello");
+				else 
+					btn.setText("Click");
+			}
+		});
+		btnUserRegister.setAction(action);
+		userRegister();
 	}
+	
+	public void userRegister() {
+		layout.show(frame.getContentPane(), "userRegister");
+	}
+	
 	
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(192, 192, 192));
 		frame.setBounds(100, 100, 450, 530);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		frame.getContentPane().setLayout(layout = new CardLayout(0, 0));
 		
-		frame.getContentPane().add(panel, "name_1988128391982900");
-		panel.setLayout(null);
+		//page:Start Market application
+		
+		frame.getContentPane().add(marketStart, "marketStart");
+		marketStart.setLayout(null);
 		
 		JLabel lblBookmarket_1 = new JLabel("BooKMarket");
 		lblBookmarket_1.setBounds(93, 27, 242, 52);
 		lblBookmarket_1.setFont(new Font("Berlin Sans FB", Font.PLAIN, 46));
-		panel.add(lblBookmarket_1);
+		marketStart.add(lblBookmarket_1);
 		
-		textField = new JTextField();
-		textField.setBounds(71, 168, 207, 27);
-		panel.add(textField);
-		textField.setColumns(17);
+		logInID = new JTextField();
+		logInID.setBounds(71, 168, 207, 27);
+		marketStart.add(logInID);
+		logInID.setColumns(17);
 		
 		JLabel lblNewLabel = new JLabel("ID:");
 		lblNewLabel.setBounds(17, 165, 37, 21);
-		panel.add(lblNewLabel);
+		marketStart.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("PW:");
 		lblNewLabel_1.setBounds(17, 212, 46, 21);
-		panel.add(lblNewLabel_1);
+		marketStart.add(lblNewLabel_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(71, 204, 207, 27);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		logInPassword = new JTextField();
+		logInPassword.setBounds(71, 204, 207, 27);
+		marketStart.add(logInPassword);
+		logInPassword.setColumns(10);
 		
-		JButton btnNewButton = new JButton("LogIn");
-		btnNewButton.setBounds(295, 161, 125, 72);
-		panel.add(btnNewButton);
+		JButton btnLogIn = new JButton("LogIn");
+		btnLogIn.setBounds(295, 161, 125, 72);
+		marketStart.add(btnLogIn);
 		
-		JButton btnNewButton_1 = new JButton("New Register");
-		btnNewButton_1.setBounds(146, 321, 154, 52);
-		panel.add(btnNewButton_1);
+		JButton btnUserRegister = new JButton("New Register");
+		
+		btnUserRegister.setBounds(146, 321, 154, 52);
+		marketStart.add(btnUserRegister);
+		
+		//page: when click "New Register"
 		
 		JPanel userRegister = new JPanel();
-		frame.getContentPane().add(userRegister, "name_1988215095290800");
+		frame.getContentPane().add(userRegister, "userRegister");
 		userRegister.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("New Register");
@@ -136,14 +176,14 @@ public class UserInterface {
 		lblNewLabel_6.setBounds(17, 354, 119, 21);
 		userRegister.add(lblNewLabel_6);
 		
-		JButton btnNewButton_2 = new JButton("register");
-		btnNewButton_2.setBounds(153, 408, 125, 29);
-		userRegister.add(btnNewButton_2);
+		JButton btnConfirmUser = new JButton("register");
+		btnConfirmUser.setBounds(153, 408, 125, 29);
+		userRegister.add(btnConfirmUser);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(153, 146, 190, 27);
-		userRegister.add(textField_2);
-		textField_2.setColumns(15);
+		textField_ = new JTextField();
+		textField_.setBounds(153, 146, 190, 27);
+		userRegister.add(textField_);
+		textField_.setColumns(15);
 		
 		textField_3 = new JTextField();
 		textField_3.setBounds(153, 217, 190, 27);
@@ -161,6 +201,8 @@ public class UserInterface {
 		textField_5.setBounds(153, 351, 190, 27);
 		userRegister.add(textField_5);
 		textField_5.setColumns(15);
+		
+		//page: after login
 		
 		JPanel marketIn = new JPanel();
 		frame.getContentPane().add(marketIn, "name_1988235523678600");
@@ -199,6 +241,7 @@ public class UserInterface {
 		btnNewButton_7.setBounds(17, 285, 125, 29);
 		bookFindPanel.add(btnNewButton_7);
 		
+		//result of 'find Book'
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
 		scrollPane.setBounds(45, 124, 332, 127);
@@ -218,15 +261,122 @@ public class UserInterface {
 		btnNewButton_6.setBounds(322, 402, 89, 57);
 		marketIn.add(btnNewButton_6);
 		
+		//
+		
 		JPanel panel_1 = new JPanel();
 		frame.getContentPane().add(panel_1, "name_1992470234600800");
 		panel_1.setLayout(null);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(17, 98, 272, 257);
+		scrollPane_1.setBounds(17, 98, 394, 361);
 		panel_1.add(scrollPane_1);
 		
 		table_1 = new JTable();
 		scrollPane_1.setViewportView(table_1);
+		
+		JPanel panel_2 = new JPanel();
+		scrollPane_1.setRowHeaderView(panel_2);
+		panel_2.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JButton btnNewButton_9 = new JButton("New button");
+		panel_2.add(btnNewButton_9);
+		
+		JButton btnNewButton_10 = new JButton("New button");
+		panel_2.add(btnNewButton_10);
+		
+		JLabel lblMyBook = new JLabel("MY BOOK");
+		lblMyBook.setBounds(17, 37, 111, 46);
+		panel_1.add(lblMyBook);
+		
+		JButton btnNewButton_11 = new JButton("Back");
+		btnNewButton_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_11.setBounds(338, 42, 73, 41);
+		panel_1.add(btnNewButton_11);
+		
+		JPanel bookRegister = new JPanel();
+		frame.getContentPane().add(bookRegister, "name_146048791974900");
+		bookRegister.setLayout(null);
+		
+		JLabel lblNewLabel_8 = new JLabel("Name");
+		lblNewLabel_8.setBounds(17, 60, 78, 20);
+		bookRegister.add(lblNewLabel_8);
+		
+		JLabel lblNewLabel_9 = new JLabel("Author");
+		lblNewLabel_9.setBounds(17, 110, 78, 21);
+		bookRegister.add(lblNewLabel_9);
+		
+		JLabel lblNewLabel_10 = new JLabel("Publisher");
+		lblNewLabel_10.setBounds(17, 160, 78, 21);
+		bookRegister.add(lblNewLabel_10);
+		
+		JLabel lblNewLabel_11 = new JLabel("ISBN");
+		lblNewLabel_11.setBounds(17, 210, 78, 21);
+		bookRegister.add(lblNewLabel_11);
+		
+		JLabel lblNewLabel_12 = new JLabel("Price");
+		lblNewLabel_12.setBounds(17, 260, 78, 21);
+		bookRegister.add(lblNewLabel_12);
+		
+		textField_6 = new JTextField();
+		textField_6.setBounds(140, 57, 156, 27);
+		bookRegister.add(textField_6);
+		textField_6.setColumns(10);
+		
+		textField_7 = new JTextField();
+		textField_7.setBounds(140, 110, 156, 27);
+		bookRegister.add(textField_7);
+		textField_7.setColumns(10);
+		
+		textField_8 = new JTextField();
+		textField_8.setBounds(140, 157, 156, 27);
+		bookRegister.add(textField_8);
+		textField_8.setColumns(10);
+		
+		textField_9 = new JTextField();
+		textField_9.setBounds(140, 207, 156, 27);
+		bookRegister.add(textField_9);
+		textField_9.setColumns(10);
+		
+		textField_10 = new JTextField();
+		textField_10.setBounds(140, 257, 156, 27);
+		bookRegister.add(textField_10);
+		textField_10.setColumns(10);
+		
+		JButton btnNewButton_12 = new JButton("SELL");
+		btnNewButton_12.setBounds(152, 413, 125, 29);
+		bookRegister.add(btnNewButton_12);
+		
+		JLabel lblNewLabel_13 = new JLabel("Publishing Year");
+		lblNewLabel_13.setBounds(17, 310, 123, 21);
+		bookRegister.add(lblNewLabel_13);
+		
+		JLabel lblNewLabel_14 = new JLabel("State");
+		lblNewLabel_14.setBounds(17, 360, 78, 21);
+		bookRegister.add(lblNewLabel_14);
+		
+		textField_11 = new JTextField();
+		textField_11.setBounds(140, 307, 156, 27);
+		bookRegister.add(textField_11);
+		textField_11.setColumns(10);
+		
+		textField_12 = new JTextField();
+		textField_12.setBounds(140, 357, 156, 27);
+		bookRegister.add(textField_12);
+		textField_12.setColumns(10);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setBounds(333, 13, 78, 29);
+		bookRegister.add(btnBack);
+	}
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
 	}
 }
