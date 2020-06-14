@@ -17,5 +17,5 @@ public interface SystemForUser {
 	
 	public ArrayList<String> findBook(String bookName);
 	
-	public boolean modifyBook(Book book,String name, String author, String state, Integer price , Integer year);
+	public boolean modifyBook(Book book,String name,int ISBN, String author,String publisher, String state, Integer price , Integer year);
 }

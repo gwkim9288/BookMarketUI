@@ -7,7 +7,7 @@ import bookMarketSystem.Human;
 
 public interface SystemForAdmin {
 	
-	public boolean deleteBook(Book book);
+	public boolean deleteBook();
 	
 	public ArrayList<String> findBook(String bookName);
 }
