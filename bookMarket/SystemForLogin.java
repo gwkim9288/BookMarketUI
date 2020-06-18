@@ -9,4 +9,5 @@ public interface SystemForLogin {
 	public Place getPlace() ;
 	public boolean isAdmin();
 	public UserManager getManager();
+	public boolean isRegistered();
 }

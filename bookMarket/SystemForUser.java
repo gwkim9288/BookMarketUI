@@ -9,13 +9,16 @@ import bookMarketSystem.Purchase;
 import bookMarketSystem.UserPlace;
 
 public interface SystemForUser {
-	public boolean enterBook();
+	public boolean enterBook(String name,Integer ISBN, String author,String publisher, String state, Integer price , Integer year);
 
-	public boolean deleteBook();
+	public boolean deleteBook(int bookNum);
 	
-	public Purchase buyBook(int num);
+	public String buyBook(int num);
 	
 	public ArrayList<String> findBook(String bookName);
 	
-	public boolean modifyBook(Book book,String name,int ISBN, String author,String publisher, String state, Integer price , Integer year);
+	public boolean modifyBook(int bookNum,String name,Integer ISBN, String author,String publisher, String state, Integer price , Integer year);
+
+	public ArrayList<String> listUserBook();
+
 }
