@@ -9,5 +9,5 @@ public interface SystemForAdmin {
 	
 	public boolean deleteBook(int bookNum);
 	
-	public ArrayList<String> findBook(String bookName);
+	public ArrayList<String> findBook(String bookName, int option);
 }

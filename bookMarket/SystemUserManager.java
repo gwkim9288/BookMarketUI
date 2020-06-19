@@ -7,7 +7,7 @@ import bookMarketSystem.User;
 
 public interface SystemUserManager {
 	
-	boolean deleteUser(String name);
+	int deleteUser(String name);
 	
 	boolean changeActive(String name);
 	

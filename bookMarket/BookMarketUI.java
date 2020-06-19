@@ -17,6 +17,10 @@ public class BookMarketUI {
 	
 	
 	public void initialize() {
+		logIn = null;
+		userPlace = null;
+		adminPlace = null;
+		userManager = null;
 		Scanner sc = new Scanner(System.in);
 		int input;
 		System.out.println("Hello Welcome To My BOOK Market\n");
@@ -87,7 +91,7 @@ public class BookMarketUI {
 		logIn = new Market(inputName,inputPassword);
 		if(logIn.isRegistered()==false) {
 			System.out.println("You are not registered or You input incorrect info.\n");
-			logIn();
+			initialize();
 		}
 		if(logIn.isAdmin()) {
 			adminPlace = logIn.getPlace();
@@ -108,10 +112,12 @@ public class BookMarketUI {
 		while(true) {
 			try {
 				System.out.println("1.Search Book , 2.Register Book, 3.List up books you registered");
-				System.out.print("Please input what you want to do:");
+				System.out.print("Please input what you want to do(Logout : 0):");
 				choice = sc.nextInt();
 				sc.nextLine();
-				if(choice == 1) {
+				if(choice == 0)
+					initialize();
+				else if(choice == 1) {
 					findBookUser();
 				}
 				else if(choice == 2) {
@@ -139,10 +145,12 @@ public class BookMarketUI {
 		while(true) {
 			try {
 				System.out.println("1.Search Book , 2.UserManage");
-				System.out.print("Please input what you want to do:");
+				System.out.print("Please input what you want to do(Logout : 0):");
 				choice = sc.nextInt();
 				sc.nextLine();
-				if(choice == 1)
+				if(choice == 0)
+					initialize();
+				else if(choice == 1)
 					findBookAdmin();
 				else if(choice == 2)
 					userManage();
@@ -158,22 +166,35 @@ public class BookMarketUI {
 	
 	public void findBookUser() {
 		Scanner sc = new Scanner(System.in);
-		int num =0;
 		ArrayList<String> result = new ArrayList<>();
+		int num =0;
 		System.out.println("___________________________________________________________________________________________________________");
 		while(true) {
-			System.out.print("Enter book name(if you want to return: '!'):");
-			String bookName = sc.nextLine();
-			if(bookName.equals("!"))
-			{
-				marketInUser();
+			try {
+				System.out.println("1.Name  2.ISBN  3.Author  4.Publisher  5.Publishing Year  6.Seller's ID");
+				System.out.print("Please input searcher's category number(if you want to return: '0'):");
+				int option = sc.nextInt();
+				sc.nextLine();
+				if(option == 0)
+				{
+					marketInUser();
+				}
+				System.out.print("What do you want to search:");
+				String input = sc.nextLine();
+				result = userPlace.findBook(input,option);
+				if(result.isEmpty())
+					System.out.println("Therte is no matched Book\n");
+				else
+					break;
+			}catch(InputMismatchException e) {
+				System.out.println("Please input integer");
+				sc = new Scanner(System.in);
+			} catch(NumberFormatException e) {
+				System.out.println("Please input integer.");
+				sc = new Scanner(System.in);
 			}
-			result = userPlace.findBook(bookName);
-			if(result.isEmpty())
-				System.out.println("There is no matched Book\n");
-			else
-				break;
 		}
+		
 		System.out.println("[Search Result]");
 		for(String i : result)
 		{
@@ -204,17 +225,29 @@ public class BookMarketUI {
 		int num =0;
 		System.out.println("___________________________________________________________________________________________________________");
 		while(true) {
-			System.out.print("Enter book name(if you want to return: '!'):");
-			String bookName = sc.nextLine();
-			if(bookName.equals("!"))
-			{
-				marketInAdmin();
+			try {
+				System.out.println("1.Name  2.ISBN  3.Author  4.Publisher  5.Publishing Year  6.Seller's ID");
+				System.out.print("Please input searcher's category number(if you want to return: '0'):");
+				int option = sc.nextInt();
+				sc.nextLine();
+				if(option == 0)
+				{
+					marketInAdmin();
+				}
+				System.out.print("What do you want to search:");
+				String input = sc.nextLine();
+				result = adminPlace.findBook(input,option);
+				if(result.isEmpty())
+					System.out.println("Therte is no matched Book\n");
+				else
+					break;
+			}catch(InputMismatchException e) {
+				System.out.println("Please input integer");
+				sc = new Scanner(System.in);
+			} catch(NumberFormatException e) {
+				System.out.println("Please input integer.");
+				sc = new Scanner(System.in);
 			}
-			result = adminPlace.findBook(bookName);
-			if(result.isEmpty())
-				System.out.println("There is no matched Book\n");
-			else
-				break;
 		}
 		
 		System.out.println("[Search List]");
@@ -281,20 +314,26 @@ public class BookMarketUI {
 	public void deleteUser() {
 		Scanner sc = new Scanner(System.in);
 		while(true) {
-			System.out.println("<Delete User>\n");
+			System.out.println("\n<Delete User>\n");
 			System.out.print("Enter the user name(if you want to return: '!'):");
 			String input = sc.nextLine();
-			if(input == "!")
-				break;
+			if(input.equals("!"))
+				userManage();
 			else
 			{
-				if(userManager.deleteUser(input)) {
+				if(userManager.deleteUser(input) == 1) {
 					System.out.println("Delete complete.\n");
 					userManage(); //after delete user go back to usermanage mode;
 					break;
 				}
-				else
+				else if(userManager.deleteUser(input) == 2){
 					System.out.println("There is no user match your input.\n");
+					userManage();
+				}
+				else {
+					System.out.println("This user is active. You can't delete active user.\n");
+					userManage();
+				}
 			}
 		}
 	}
@@ -303,11 +342,11 @@ public class BookMarketUI {
 	public void changeActivation() {
 		Scanner sc = new Scanner(System.in);
 		while(true) {
-			System.out.println("<Change User Activation>\n");
+			System.out.println("\n<Change User Activation>\n");
 			System.out.print("Enter the user name(if you want to return: '!'):");
 			String input = sc.nextLine();
-			if(input == "!")
-				break;
+			if(input.equals("!"))
+				userManage();
 			else
 			{
 				if(userManager.changeActive(input)) {
@@ -315,8 +354,10 @@ public class BookMarketUI {
 					userManage(); //after deleting user go back to usermanage mode;
 					break;
 				}
-				else
+				else {
 					System.out.println("There is no user match your input.\n");
+					userManage();
+				}
 			}
 		}
 	}
@@ -339,7 +380,7 @@ public class BookMarketUI {
 		}	
 		while(true) {
 			try {
-				System.out.print("1.delete book , 2.modify book info(if you want to return: '!'):");
+				System.out.print("1.delete book , 2.modify book info(if you want to return: '0'):");
 				int choice = sc.nextInt();
 				sc.nextLine();
 				if(choice == 0)

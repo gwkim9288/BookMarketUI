@@ -15,7 +15,7 @@ public interface SystemForUser {
 	
 	public String buyBook(int num);
 	
-	public ArrayList<String> findBook(String bookName);
+	public ArrayList<String> findBook(String bookName, int option);
 	
 	public boolean modifyBook(int bookNum,String name,Integer ISBN, String author,String publisher, String state, Integer price , Integer year);
 
