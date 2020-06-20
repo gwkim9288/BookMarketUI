@@ -7,6 +7,9 @@ import java.util.Scanner;
 import bookMarketSystem.Market;
 import bookMarketSystem.UserRegister;
 
+
+
+
 public class BookMarketUI {
 	
 	SystemUserRegister userReg = new UserRegister();
@@ -199,7 +202,7 @@ public class BookMarketUI {
 		for(String i : result)
 		{
 			num++;
-			System.out.println(num+")"+i.toString());
+			System.out.println(i);
 		}
 		while(true) {
 			try {
@@ -234,6 +237,8 @@ public class BookMarketUI {
 				{
 					marketInAdmin();
 				}
+				else if(option<0||option>6)
+					continue;
 				System.out.print("What do you want to search:");
 				String input = sc.nextLine();
 				result = adminPlace.findBook(input,option);
@@ -254,7 +259,7 @@ public class BookMarketUI {
 		for(String i : result)
 		{
 			num++;
-			System.out.println(num+")"+i.toString());
+			System.out.println(i);
 		}
 		
 		while(true) {
@@ -287,7 +292,7 @@ public class BookMarketUI {
 		System.out.println("[User List]");
 		for(String i :userList)
 		{
-			System.out.println(i.toString());
+			System.out.println(i);
 		}
 		
 		while(true) {
@@ -376,7 +381,7 @@ public class BookMarketUI {
 		System.out.println("[Your Book]");
 		for(String i: result) {
 			num++;
-			System.out.println(num+")"+i.toString());
+			System.out.println(i);
 		}	
 		while(true) {
 			try {
@@ -406,6 +411,7 @@ public class BookMarketUI {
 		Integer inputISBN = null;
 		Integer inputYear = null;
 		Integer inputPrice = null;
+		Integer inputState = null;
 		
 		System.out.println("___________________________________________________________________________________________________________");
 		System.out.println("<Sell Your Book>");
@@ -421,13 +427,17 @@ public class BookMarketUI {
 		while (true) {
 			try {
 				System.out.print("ISBN(without '-'):");
-				temp = sc.nextLine();
-				inputISBN = Integer.parseInt(temp);
+				temp= sc.nextLine();
+				if(temp.isEmpty())
+					inputISBN = null;
+				else
+					inputISBN = Integer.parseInt(temp);
 				break;
 			}catch(NumberFormatException e) {
-				System.out.println("Please input only integer");
+				System.out.println("Please input only integer.\n");
 				sc = new Scanner(System.in);
 			}
+			
 		}
 		
 		System.out.print("Author:");
@@ -439,32 +449,55 @@ public class BookMarketUI {
 		while (true) {
 			try {
 				System.out.print("Publishing Year:");
-				temp = sc.nextLine();
-				inputYear = Integer.parseInt(temp);
+				temp= sc.nextLine();
+				if(temp.isEmpty())
+					inputYear = null;
+				else
+					inputYear = Integer.parseInt(temp);
 				break;
 			}catch(NumberFormatException e) {
-				System.out.println("Please input only integer");
-				sc = new Scanner(System.in);
-			}
-		}
-		
-		while (true) {
-			try {
-				System.out.print("Price:");
-				temp = sc.nextLine();
-				inputPrice = Integer.parseInt(temp);
-				break;
-			}catch(NumberFormatException e) {
-				System.out.println("Please input only integer\n");
+				System.out.println("Please input vaild number.\n");
 				sc = new Scanner(System.in);
 			}
 			
 		}
 		
-		System.out.print("State:");
-		String inputState= sc.nextLine();
+		while (true) {
+			try {
+				System.out.print("State(Excellent:1, Good:2, Fair:3):");
+				temp= sc.nextLine();
+				if(temp.isEmpty())
+					inputPrice = null;
+				else
+					inputPrice = Integer.parseInt(temp);
+				break;
+			}catch(NumberFormatException e) {
+				System.out.println("Please input vaild number.\n");
+				sc = new Scanner(System.in);
+			}
+			
+		}
 		
-		userPlace.enterBook(inputName,inputISBN,inputAuthor,inputPub,inputState,inputYear,inputPrice);
+		while (true) {
+			try {
+				System.out.print("State(Excellent:1, Good:2, Fair:3):");
+				temp= sc.nextLine();
+				if(temp.isEmpty())
+					inputState = null;
+				else
+					inputState = Integer.parseInt(temp);
+				if(inputState<0||inputState>3)
+					continue;
+				break;
+			}catch(NumberFormatException e) {
+				System.out.println("Please input vaild number.\n");
+				sc = new Scanner(System.in);
+			}
+			
+		}
+		
+		
+		userPlace.enterBook(inputName,inputISBN,inputAuthor,inputPub,inputState,inputPrice, inputYear);
 		System.out.println("Success!!\n");
 		System.out.println("___________________________________________________________________________________________________________");
 	}
@@ -503,6 +536,7 @@ public class BookMarketUI {
 		Integer inputISBN = null;
 		Integer inputYear = null;
 		Integer inputPrice = null;
+		Integer inputState = null;
 		System.out.println("<Modify Book>");
 		while(true) {
 			try {
@@ -531,13 +565,17 @@ public class BookMarketUI {
 		while (true) {
 			try {
 				System.out.print("ISBN(without '-'):");
-				temp = sc.nextLine();
-				inputISBN = Integer.parseInt(temp);
+				temp= sc.nextLine();
+				if(temp.isEmpty())
+					inputISBN = null;
+				else
+					inputISBN = Integer.parseInt(temp);
 				break;
 			}catch(NumberFormatException e) {
-				System.out.println("Please input only integer");
+				System.out.println("Please input only integer.\n");
 				sc = new Scanner(System.in);
 			}
+			
 		}
 		
 		System.out.print("Author:");
@@ -549,30 +587,52 @@ public class BookMarketUI {
 		while (true) {
 			try {
 				System.out.print("Publishing Year:");
-				temp = sc.nextLine();
-				inputYear = Integer.parseInt(temp);
+				temp= sc.nextLine();
+				if(temp.isEmpty())
+					inputYear = null;
+				else
+					inputYear = Integer.parseInt(temp);
 				break;
 			}catch(NumberFormatException e) {
-				System.out.println("Please input only integer");
-				sc = new Scanner(System.in);
-			}
-		}
-		
-		while (true) {
-			try {
-				System.out.print("Price:");
-				temp = sc.nextLine();
-				inputPrice = Integer.parseInt(temp);
-				break;
-			}catch(NumberFormatException e) {
-				System.out.println("Please input only integer\n");
+				System.out.println("Please input only integer.\n");
 				sc = new Scanner(System.in);
 			}
 			
 		}
 		
-		System.out.print("State:");
-		String inputState= sc.nextLine();
+		while (true) {
+			try {
+				System.out.print("Price:");
+				temp= sc.nextLine();
+				if(temp.isEmpty())
+					inputPrice = null;
+				else
+					inputPrice = Integer.parseInt(temp);
+				break;
+			}catch(NumberFormatException e) {
+				System.out.println("Please input only integer.\n");
+				sc = new Scanner(System.in);
+			}
+			
+		}
+		
+		while (true) {
+			try {
+				System.out.print("State(Excellent:1, Good:2, Fair:3):");
+				temp= sc.nextLine();
+				if(temp.isEmpty())
+					inputState = null;
+				else
+					inputState = Integer.parseInt(temp);
+				if(inputState<0||inputState>3)
+					continue;
+				break;
+			}catch(NumberFormatException e) {
+				System.out.println("Please input vaild number.\n");
+				sc = new Scanner(System.in);
+			}
+			
+		}
 		
 		if(userPlace.modifyBook(inputNum, inputName, inputISBN, inputAuthor, inputPub, inputState, inputPrice, inputYear))
 			System.out.println("Success.");
