@@ -14,7 +14,7 @@ import bookMarketSystem.User;
 import bookMarketSystem.UserPlace;
 import junit.framework.TestCase;
 
-class UserPlaceTest extends TestCase {
+class PlaceTest extends TestCase {
 
 	Human user = new User("ex","ex","ex",1);
 	UserPlace p = new UserPlace(user);

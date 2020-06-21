@@ -4,13 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import bookMarketSystem.Admin;
 import bookMarketSystem.Human;
 import bookMarketSystem.User;
 import bookMarketSystem.UserManager;
 import junit.framework.TestCase;
 
 class UserManagerTest extends TestCase{
-	UserManager manager = new UserManager();
+	Human admin = new Admin();
+	UserManager manager = new UserManager(admin);
 	
 	
 	@Test
