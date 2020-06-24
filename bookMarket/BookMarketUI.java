@@ -26,7 +26,7 @@ public class BookMarketUI {
 		userManager = null;
 		Scanner sc = new Scanner(System.in);
 		int input;
-		System.out.println("Hello Welcome To My BOOK Market\n");
+		
 		
 		while(true) {
 			try {
@@ -80,7 +80,12 @@ public class BookMarketUI {
 		}
 		System.out.print("Address:");
 		String inputAddress = sc.nextLine();
-		userReg.regUser(inputName, inputPW, inputAddress, inputPhoneNum);
+		
+		//if user's input ID is already created, regUser return false
+		if(userReg.regUser(inputName, inputPW, inputAddress, inputPhoneNum) == false) {
+			System.out.println("Your input ID is already created. Please another ID.\n");
+			registerUser();
+		}
 	}
 	
 	public void logIn() {
@@ -111,9 +116,9 @@ public class BookMarketUI {
 	public void marketInUser() {
 		Scanner sc = new Scanner(System.in);
 		int choice;
-		System.out.println("___________________________________________________________________________________________________________");
 		while(true) {
 			try {
+				System.out.println("___________________________________________________________________________________________________________");
 				System.out.println("1.Search Book , 2.Register Book, 3.List up books you registered");
 				System.out.print("Please input what you want to do(Logout : 0):");
 				choice = sc.nextInt();
@@ -237,8 +242,10 @@ public class BookMarketUI {
 				{
 					marketInAdmin();
 				}
-				else if(option<0||option>6)
+				else if(option<0||option>6) {
+					System.out.println("Please input number '1~6'.\n");
 					continue;
+				}
 				System.out.print("What do you want to search:");
 				String input = sc.nextLine();
 				result = adminPlace.findBook(input,option);
@@ -371,7 +378,6 @@ public class BookMarketUI {
 	
 	public void listUserBook() {
 		Scanner sc = new Scanner(System.in);
-		int num =0;
 		ArrayList<String> result = userPlace.listUserBook();
 		System.out.println("___________________________________________________________________________________________________________");
 		if(result == null) {
@@ -380,16 +386,16 @@ public class BookMarketUI {
 		}
 		System.out.println("[Your Book]");
 		for(String i: result) {
-			num++;
 			System.out.println(i);
 		}	
 		while(true) {
 			try {
+				sc = new Scanner(System.in);
 				System.out.print("1.delete book , 2.modify book info(if you want to return: '0'):");
 				int choice = sc.nextInt();
 				sc.nextLine();
 				if(choice == 0)
-					marketInUser();
+					break;
 				else if(choice == 1)
 					deleteBookUser();
 				else if(choice == 2)
@@ -429,7 +435,7 @@ public class BookMarketUI {
 				System.out.print("ISBN(without '-'):");
 				temp= sc.nextLine();
 				if(temp.isEmpty())
-					inputISBN = null;
+					inputISBN = new Integer(-1);
 				else
 					inputISBN = Integer.parseInt(temp);
 				break;
@@ -451,7 +457,7 @@ public class BookMarketUI {
 				System.out.print("Publishing Year:");
 				temp= sc.nextLine();
 				if(temp.isEmpty())
-					inputYear = null;
+					inputYear = new Integer(-1);
 				else
 					inputYear = Integer.parseInt(temp);
 				break;
@@ -464,10 +470,10 @@ public class BookMarketUI {
 		
 		while (true) {
 			try {
-				System.out.print("State(Excellent:1, Good:2, Fair:3):");
+				System.out.print("Price:");
 				temp= sc.nextLine();
 				if(temp.isEmpty())
-					inputPrice = null;
+					inputPrice = new Integer(-1);
 				else
 					inputPrice = Integer.parseInt(temp);
 				break;
@@ -482,12 +488,16 @@ public class BookMarketUI {
 			try {
 				System.out.print("State(Excellent:1, Good:2, Fair:3):");
 				temp= sc.nextLine();
-				if(temp.isEmpty())
-					inputState = null;
+				if(temp.isEmpty()) {
+					inputState = new Integer(-1);
+					break;
+				}
 				else
 					inputState = Integer.parseInt(temp);
-				if(inputState<0||inputState>3)
+				if(inputState<0||inputState>3) {
+					System.out.println("Please input integer '1 ~ 3'\n");
 					continue;
+				}
 				break;
 			}catch(NumberFormatException e) {
 				System.out.println("Please input vaild number.\n");
@@ -514,10 +524,10 @@ public class BookMarketUI {
 				inputNum = sc.nextInt();
 				sc.nextLine();
 				if(inputNum == 0)
-					listUserBook();
+					break;
 				if(userPlace.deleteBook(inputNum)) {
 					System.out.println("Success.\n");
-					listUserBook();
+					break;
 				}
 				else
 					System.out.println("You can't delete other's book. Please input valid number.\n");
@@ -567,7 +577,7 @@ public class BookMarketUI {
 				System.out.print("ISBN(without '-'):");
 				temp= sc.nextLine();
 				if(temp.isEmpty())
-					inputISBN = null;
+					inputISBN =  new Integer(-1);
 				else
 					inputISBN = Integer.parseInt(temp);
 				break;
@@ -589,7 +599,7 @@ public class BookMarketUI {
 				System.out.print("Publishing Year:");
 				temp= sc.nextLine();
 				if(temp.isEmpty())
-					inputYear = null;
+					inputYear = new Integer(-1);
 				else
 					inputYear = Integer.parseInt(temp);
 				break;
@@ -605,7 +615,7 @@ public class BookMarketUI {
 				System.out.print("Price:");
 				temp= sc.nextLine();
 				if(temp.isEmpty())
-					inputPrice = null;
+					inputPrice = new Integer(-1);
 				else
 					inputPrice = Integer.parseInt(temp);
 				break;
@@ -620,8 +630,10 @@ public class BookMarketUI {
 			try {
 				System.out.print("State(Excellent:1, Good:2, Fair:3):");
 				temp= sc.nextLine();
-				if(temp.isEmpty())
-					inputState = null;
+				if(temp.isEmpty()) {
+					inputState = new Integer(-1);
+					break;
+				}
 				else
 					inputState = Integer.parseInt(temp);
 				if(inputState<0||inputState>3)
@@ -638,7 +650,6 @@ public class BookMarketUI {
 			System.out.println("Success.");
 		else
 			System.out.println("Fail. You can't modify other's book.");
-		listUserBook();
 	}
 	
 	
